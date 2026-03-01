@@ -128,7 +128,7 @@ When β is well below unity, bid placement matters; when β → 1, the revenue s
              electricity markets: Analytical solutions and distributionally
              robust strategies},
   year    = {2025},
-  journal = {European Journal of Operational Research},
+  journal = {GitHub Repository},
 }
 ```
 
