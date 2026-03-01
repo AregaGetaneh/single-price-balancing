@@ -26,7 +26,7 @@ $$p^{b*} = \frac{\mu_2 - \beta \mu_1}{1 - \beta}, \qquad \beta = \rho \frac{\sig
 ├── src/
 │   ├── __init__.py              # Package API
 │   ├── data_classes.py          # MarketParameters, OptimizationResult
-│   ├── data_acquisition.py      # Nordic (Energi Data Service) & German (ENTSO-E) fetchers
+│   ├── data_acquisition.py      # Nordic (Energi Data Service) & German (SMARD.de) fetchers
 │   ├── data_processing.py       # Cleaning, feature engineering, parameter estimation
 │   ├── optimization.py          # Analytical and numerical bid optimization
 │   ├── dro_solver.py            # Wasserstein DRO with local Lipschitz proxy
@@ -56,11 +56,11 @@ pip install -r requirements.txt
 ### 2. Fetch data
 
 ```bash
-# Nordic mFRR (DK2) — no API key required
+# Nordic mFRR (DK2) — Energi Data Service, no API key required
 python -m src.data_acquisition --market nordic
 
-# German aFRR (DE-LU) — requires ENTSO-E API token
-python -m src.data_acquisition --market german --entsoe-key YOUR_TOKEN
+# German aFRR (DE-LU) — SMARD.de / Bundesnetzagentur, no API key required
+python -m src.data_acquisition --market german
 
 # Or generate synthetic data calibrated to Table 3
 python -m src.data_acquisition --market nordic --synthetic
@@ -101,9 +101,13 @@ print(result)
 | Market | Product | Zone | Platform | Source | API |
 |--------|---------|------|----------|--------|-----|
 | Nordic mFRR | Manual frequency restoration reserve | DK2 | MARI | [Energi Data Service](https://www.energidataservice.dk/) | Open (no key) |
-| German aFRR | Automatic frequency restoration reserve | DE-LU | PICASSO | [ENTSO-E Transparency Platform](https://transparency.entsoe.eu/) | Requires [API token](https://transparency.entsoe.eu/content/static_content/Static%20content/web%20api/Guide.html) |
+| German aFRR | Automatic frequency restoration reserve | DE-LU | PICASSO | [SMARD.de / Bundesnetzagentur](https://www.smard.de/) | Open (no key) |
 
-**Sample period**: January 2022 – February 2024 (hourly resolution, upward-activation hours only).
+**Nordic data** — Both the activation price (λ^BE) and the imbalance settlement price (λ^imb) come from the same Energi Data Service dataset (`RegulatingBalancePowerdata`, columns `BalancingPowerPriceUpEUR` and `ImbalancePriceEUR`).
+
+**German data** — Two SMARD modules are combined: day-ahead wholesale price (module 8004169 → λ^BE) and Ausgleichsenergiepreis / reBAP (module 15004382 → λ^imb).
+
+**Sample period**: January 2022 – December 2024 (hourly resolution).
 
 ## Key Results
 

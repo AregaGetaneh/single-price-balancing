@@ -9,16 +9,23 @@ markets:
     bidding_zone: "DK2"
     platform: "MARI"
     start_date: "2022-01-01"
-    end_date: "2024-03-01"
+    end_date: "2024-12-31"
     data_source: "Energi Data Service"
+    eds_dataset: "RegulatingBalancePowerdata"
+    eds_columns:
+      clearing_price: "BalancingPowerPriceUpEUR"
+      imbalance_price: "ImbalancePriceEUR"
   german:
     name: "German aFRR (DE-LU)"
     product: "aFRR"
     bidding_zone: "DE-LU"
     platform: "PICASSO"
     start_date: "2022-01-01"
-    end_date: "2024-03-01"
-    data_source: "ENTSO-E Transparency Platform"
+    end_date: "2024-12-31"
+    data_source: "SMARD.de (Bundesnetzagentur)"
+    smard_modules:
+      clearing_price: 8004169       # Day-ahead wholesale price
+      imbalance_price: 15004382     # Ausgleichsenergiepreis (reBAP)
 
 backtesting:
   train_test_split: 0.70          # 70/30 chronological split

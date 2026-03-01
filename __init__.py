@@ -19,6 +19,7 @@ visualization    : Publication-quality figure generation
 """
 
 from .data_classes import MarketParameters, OptimizationResult
+from .data_acquisition import load_balancing_data
 from .optimization import BalancingMarketOptimizer
 from .dro_solver import optimize_wasserstein_dro
 from .backtesting import rolling_backtest, block_bootstrap_pb_star
